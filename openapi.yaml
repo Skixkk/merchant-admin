@@ -1,0 +1,3668 @@
+openapi: 3.0.3
+info:
+  title: Comeat Backend API
+  version: 1.0.0
+  description: 多租户餐饮外卖系统后端API文档
+paths:
+  /api/v1/business/carts/:
+    get:
+      operationId: business_carts_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCartList"
+          description: ""
+    post:
+      operationId: business_carts_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Cart"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Cart"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+          description: ""
+  /api/v1/business/carts/{id}/:
+    get:
+      operationId: business_carts_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 购物车 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+          description: ""
+    put:
+      operationId: business_carts_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 购物车 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Cart"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Cart"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Cart"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+          description: ""
+    patch:
+      operationId: business_carts_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 购物车 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedCart"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedCart"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedCart"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+          description: ""
+    delete:
+      operationId: business_carts_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 购物车 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/coupons/:
+    get:
+      operationId: business_coupons_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCouponList"
+          description: ""
+    post:
+      operationId: business_coupons_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Coupon"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Coupon"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Coupon"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coupon"
+          description: ""
+  /api/v1/business/coupons/{id}/:
+    get:
+      operationId: business_coupons_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coupon"
+          description: ""
+    put:
+      operationId: business_coupons_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Coupon"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Coupon"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Coupon"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coupon"
+          description: ""
+    patch:
+      operationId: business_coupons_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedCoupon"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedCoupon"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedCoupon"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Coupon"
+          description: ""
+    delete:
+      operationId: business_coupons_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/customer-addresses/:
+    get:
+      operationId: business_customer_addresses_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCustomerAddressList"
+          description: ""
+    post:
+      operationId: business_customer_addresses_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerAddress"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CustomerAddress"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/CustomerAddress"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerAddress"
+          description: ""
+  /api/v1/business/customer-addresses/{id}/:
+    get:
+      operationId: business_customer_addresses_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户地址 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerAddress"
+          description: ""
+    put:
+      operationId: business_customer_addresses_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户地址 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerAddress"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/CustomerAddress"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/CustomerAddress"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerAddress"
+          description: ""
+    patch:
+      operationId: business_customer_addresses_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户地址 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedCustomerAddress"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedCustomerAddress"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedCustomerAddress"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerAddress"
+          description: ""
+    delete:
+      operationId: business_customer_addresses_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户地址 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/customers/:
+    get:
+      operationId: business_customers_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCustomerList"
+          description: ""
+    post:
+      operationId: business_customers_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Customer"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Customer"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+          description: ""
+  /api/v1/business/customers/{id}/:
+    get:
+      operationId: business_customers_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者用户 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+          description: ""
+    put:
+      operationId: business_customers_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者用户 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Customer"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Customer"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+          description: ""
+    patch:
+      operationId: business_customers_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者用户 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedCustomer"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedCustomer"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedCustomer"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+          description: ""
+    delete:
+      operationId: business_customers_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者用户 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/order-items/:
+    get:
+      operationId: business_order_items_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedOrderItemList"
+          description: ""
+    post:
+      operationId: business_order_items_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderItem"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/OrderItem"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/OrderItem"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderItem"
+          description: ""
+  /api/v1/business/order-items/{id}/:
+    get:
+      operationId: business_order_items_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 订单明细 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderItem"
+          description: ""
+    put:
+      operationId: business_order_items_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 订单明细 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderItem"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/OrderItem"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/OrderItem"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderItem"
+          description: ""
+    patch:
+      operationId: business_order_items_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 订单明细 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedOrderItem"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedOrderItem"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedOrderItem"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderItem"
+          description: ""
+    delete:
+      operationId: business_order_items_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 订单明细 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/orders/:
+    get:
+      operationId: business_orders_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedOrderList"
+          description: ""
+    post:
+      operationId: business_orders_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Order"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Order"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+          description: ""
+  /api/v1/business/orders/{id}/:
+    get:
+      operationId: business_orders_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者订单 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+          description: ""
+    put:
+      operationId: business_orders_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者订单 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Order"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Order"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+          description: ""
+    patch:
+      operationId: business_orders_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者订单 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedOrder"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedOrder"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedOrder"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+          description: ""
+    delete:
+      operationId: business_orders_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 消费者订单 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/payments/:
+    get:
+      operationId: business_payments_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedPaymentList"
+          description: ""
+    post:
+      operationId: business_payments_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Payment"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Payment"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+          description: ""
+  /api/v1/business/payments/{id}/:
+    get:
+      operationId: business_payments_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 支付记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+          description: ""
+    put:
+      operationId: business_payments_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 支付记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Payment"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Payment"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+          description: ""
+    patch:
+      operationId: business_payments_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 支付记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedPayment"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedPayment"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedPayment"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+          description: ""
+    delete:
+      operationId: business_payments_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 支付记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/refunds/:
+    get:
+      operationId: business_refunds_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedRefundList"
+          description: ""
+    post:
+      operationId: business_refunds_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Refund"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Refund"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Refund"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+          description: ""
+  /api/v1/business/refunds/{id}/:
+    get:
+      operationId: business_refunds_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 退款记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+          description: ""
+    put:
+      operationId: business_refunds_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 退款记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Refund"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Refund"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Refund"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+          description: ""
+    patch:
+      operationId: business_refunds_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 退款记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedRefund"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedRefund"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedRefund"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+          description: ""
+    delete:
+      operationId: business_refunds_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 退款记录 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/business/user-coupons/:
+    get:
+      operationId: business_user_coupons_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedUserCouponList"
+          description: ""
+    post:
+      operationId: business_user_coupons_create
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCoupon"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/UserCoupon"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UserCoupon"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoupon"
+          description: ""
+  /api/v1/business/user-coupons/{id}/:
+    get:
+      operationId: business_user_coupons_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoupon"
+          description: ""
+    put:
+      operationId: business_user_coupons_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCoupon"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/UserCoupon"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UserCoupon"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoupon"
+          description: ""
+    patch:
+      operationId: business_user_coupons_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedUserCoupon"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedUserCoupon"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedUserCoupon"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCoupon"
+          description: ""
+    delete:
+      operationId: business_user_coupons_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 用户优惠券 的 唯一整数值。
+          required: true
+      tags:
+        - business
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/common/categories/:
+    get:
+      operationId: common_categories_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCategoryList"
+          description: ""
+    post:
+      operationId: common_categories_create
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Category"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Category"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+  /api/v1/common/categories/{id}/:
+    get:
+      operationId: common_categories_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品分类 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+    put:
+      operationId: common_categories_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品分类 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Category"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Category"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+    patch:
+      operationId: common_categories_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品分类 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedCategory"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedCategory"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedCategory"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+          description: ""
+    delete:
+      operationId: common_categories_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品分类 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/common/merchant-users/:
+    get:
+      operationId: common_merchant_users_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedMerchantUserList"
+          description: ""
+    post:
+      operationId: common_merchant_users_create
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MerchantUser"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/MerchantUser"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/MerchantUser"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantUser"
+          description: ""
+  /api/v1/common/merchant-users/{id}/:
+    get:
+      operationId: common_merchant_users_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商家管理员 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantUser"
+          description: ""
+    put:
+      operationId: common_merchant_users_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商家管理员 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MerchantUser"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/MerchantUser"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/MerchantUser"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantUser"
+          description: ""
+    patch:
+      operationId: common_merchant_users_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商家管理员 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedMerchantUser"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedMerchantUser"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedMerchantUser"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MerchantUser"
+          description: ""
+    delete:
+      operationId: common_merchant_users_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商家管理员 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+  /api/v1/common/products/:
+    get:
+      operationId: common_products_list
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: 分页结果集中的页码。
+          schema:
+            type: integer
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedProductList"
+          description: ""
+    post:
+      operationId: common_products_create
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Product"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Product"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+          description: ""
+  /api/v1/common/products/{id}/:
+    get:
+      operationId: common_products_retrieve
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+        - {}
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+          description: ""
+    put:
+      operationId: common_products_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/Product"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Product"
+        required: true
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+          description: ""
+    patch:
+      operationId: common_products_partial_update
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PatchedProduct"
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/PatchedProduct"
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatchedProduct"
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+          description: ""
+    delete:
+      operationId: common_products_destroy
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: 标识此 商品 的 唯一整数值。
+          required: true
+      tags:
+        - common
+      security:
+        - jwtAuth: []
+        - tokenAuth: []
+        - cookieAuth: []
+      responses:
+        "204":
+          description: No response body
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+          title: 用户
+        product:
+          allOf:
+            - $ref: "#/components/schemas/Product"
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 数量
+        is_selected:
+          type: boolean
+          title: 是否选中
+        price_snapshot:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+          title: 价格快照
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 加入时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - customer
+        - id
+        - is_deleted
+        - price_snapshot
+        - product
+        - updated_at
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: 分类名称
+          maxLength: 32
+        sort:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          title: 排序
+        is_show:
+          type: boolean
+          title: 是否显示
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - id
+        - is_deleted
+        - name
+        - updated_at
+    Coupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: 优惠券名称
+          maxLength: 64
+        type:
+          allOf:
+            - $ref: "#/components/schemas/TypeEnum"
+          title: 券类型
+        min_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 满减门槛
+        reduce_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+          title: 减免金额
+        discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,1})?$
+          nullable: true
+          title: 折扣(0.8=8折)
+        points_value:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: 积分值
+        total_count:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 发放总量
+        used_count:
+          type: integer
+          readOnly: true
+          title: 已使用
+        start_time:
+          type: string
+          format: date-time
+          title: 生效时间
+        end_time:
+          type: string
+          format: date-time
+          title: 过期时间
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - end_time
+        - id
+        - is_deleted
+        - name
+        - start_time
+        - total_count
+        - type
+        - updated_at
+        - used_count
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        wechat_openid:
+          type: string
+          title: 微信openid
+          maxLength: 64
+        wechat_unionid:
+          type: string
+          nullable: true
+          title: 微信unionid
+          maxLength: 64
+        phone:
+          type: string
+          nullable: true
+          title: 联系电话
+          maxLength: 11
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+          title: 头像
+          maxLength: 200
+        nickname:
+          type: string
+          nullable: true
+          title: 用户昵称
+          maxLength: 32
+        points:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 积分
+        balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 余额
+        total_orders:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 总订单数
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 总消费金额
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 注册时间
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: 最后登录时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - id
+        - is_deleted
+        - last_login
+        - wechat_openid
+    CustomerAddress:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+          title: 用户
+        receiver:
+          type: string
+          title: 收货人
+          maxLength: 20
+        phone:
+          type: string
+          title: 联系电话
+          maxLength: 11
+        province:
+          type: string
+          title: 省份
+          maxLength: 20
+        city:
+          type: string
+          title: 城市
+          maxLength: 20
+        district:
+          type: string
+          title: 区县
+          maxLength: 20
+        detail:
+          type: string
+          title: 详细地址
+          maxLength: 255
+        is_default:
+          type: boolean
+          title: 是否默认
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 最后更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - city
+        - created_at
+        - customer
+        - detail
+        - district
+        - id
+        - is_deleted
+        - phone
+        - province
+        - receiver
+        - updated_at
+    MerchantUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+          title: 手机号
+          maxLength: 11
+        real_name:
+          type: string
+          nullable: true
+          title: 真实姓名
+          maxLength: 32
+        is_staff:
+          type: boolean
+          title: 是否为员工
+        is_active:
+          type: boolean
+          title: 是否启用
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - id
+        - is_deleted
+        - phone
+        - updated_at
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_no:
+          type: string
+          readOnly: true
+          title: 订单号
+        customer:
+          type: integer
+          title: 用户
+        address:
+          title: 收货地址快照
+        user_coupon:
+          type: integer
+          nullable: true
+          title: 使用优惠券
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 商品总价
+        coupon_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 优惠金额
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 配送费
+        pay_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 实付金额
+        status:
+          allOf:
+            - $ref: "#/components/schemas/OrderStatusEnum"
+          title: 订单状态
+        remark:
+          type: string
+          title: 备注
+          maxLength: 200
+        pay_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 支付时间
+        accept_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 接单时间
+        finish_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 完成时间
+        cancel_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 取消时间
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - address
+        - created_at
+        - customer
+        - id
+        - is_deleted
+        - items
+        - order_no
+        - pay_amount
+        - total_amount
+        - updated_at
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          title: 订单
+        product:
+          type: integer
+          nullable: true
+          title: 关联商品
+        product_name:
+          type: string
+          title: 商品名称
+          maxLength: 64
+        product_image:
+          type: string
+          format: uri
+          title: 商品图片
+          maxLength: 200
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 单价
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 数量
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 小计
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - id
+        - is_deleted
+        - order
+        - price
+        - product_image
+        - product_name
+        - subtotal
+        - updated_at
+    OrderStatusEnum:
+      enum:
+        - pending_pay
+        - pending_accept
+        - delivering
+        - completed
+        - cancelled
+        - refunding
+        - refunded
+      type: string
+      description: |-
+        * `pending_pay` - 待支付
+        * `pending_accept` - 待接单
+        * `delivering` - 配送中
+        * `completed` - 已完成
+        * `cancelled` - 已取消
+        * `refunding` - 退款中
+        * `refunded` - 已退款
+    PaginatedCartList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Cart"
+    PaginatedCategoryList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+    PaginatedCouponList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Coupon"
+    PaginatedCustomerAddressList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerAddress"
+    PaginatedCustomerList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Customer"
+    PaginatedMerchantUserList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/MerchantUser"
+    PaginatedOrderItemList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+    PaginatedOrderList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Order"
+    PaginatedPaymentList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+    PaginatedProductList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Product"
+    PaginatedRefundList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/Refund"
+    PaginatedUserCouponList:
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserCoupon"
+    PatchedCart:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+          title: 用户
+        product:
+          allOf:
+            - $ref: "#/components/schemas/Product"
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 数量
+        is_selected:
+          type: boolean
+          title: 是否选中
+        price_snapshot:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+          title: 价格快照
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 加入时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: 分类名称
+          maxLength: 32
+        sort:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          title: 排序
+        is_show:
+          type: boolean
+          title: 是否显示
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedCoupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: 优惠券名称
+          maxLength: 64
+        type:
+          allOf:
+            - $ref: "#/components/schemas/TypeEnum"
+          title: 券类型
+        min_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 满减门槛
+        reduce_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          nullable: true
+          title: 减免金额
+        discount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,1})?$
+          nullable: true
+          title: 折扣(0.8=8折)
+        points_value:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: 积分值
+        total_count:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 发放总量
+        used_count:
+          type: integer
+          readOnly: true
+          title: 已使用
+        start_time:
+          type: string
+          format: date-time
+          title: 生效时间
+        end_time:
+          type: string
+          format: date-time
+          title: 过期时间
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedCustomer:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        wechat_openid:
+          type: string
+          title: 微信openid
+          maxLength: 64
+        wechat_unionid:
+          type: string
+          nullable: true
+          title: 微信unionid
+          maxLength: 64
+        phone:
+          type: string
+          nullable: true
+          title: 联系电话
+          maxLength: 11
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+          title: 头像
+          maxLength: 200
+        nickname:
+          type: string
+          nullable: true
+          title: 用户昵称
+          maxLength: 32
+        points:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 积分
+        balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 余额
+        total_orders:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 总订单数
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 总消费金额
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 注册时间
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: 最后登录时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedCustomerAddress:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+          title: 用户
+        receiver:
+          type: string
+          title: 收货人
+          maxLength: 20
+        phone:
+          type: string
+          title: 联系电话
+          maxLength: 11
+        province:
+          type: string
+          title: 省份
+          maxLength: 20
+        city:
+          type: string
+          title: 城市
+          maxLength: 20
+        district:
+          type: string
+          title: 区县
+          maxLength: 20
+        detail:
+          type: string
+          title: 详细地址
+          maxLength: 255
+        is_default:
+          type: boolean
+          title: 是否默认
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 最后更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedMerchantUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phone:
+          type: string
+          title: 手机号
+          maxLength: 11
+        real_name:
+          type: string
+          nullable: true
+          title: 真实姓名
+          maxLength: 32
+        is_staff:
+          type: boolean
+          title: 是否为员工
+        is_active:
+          type: boolean
+          title: 是否启用
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_no:
+          type: string
+          readOnly: true
+          title: 订单号
+        customer:
+          type: integer
+          title: 用户
+        address:
+          title: 收货地址快照
+        user_coupon:
+          type: integer
+          nullable: true
+          title: 使用优惠券
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 商品总价
+        coupon_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 优惠金额
+        delivery_fee:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 配送费
+        pay_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 实付金额
+        status:
+          allOf:
+            - $ref: "#/components/schemas/OrderStatusEnum"
+          title: 订单状态
+        remark:
+          type: string
+          title: 备注
+          maxLength: 200
+        pay_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 支付时间
+        accept_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 接单时间
+        finish_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 完成时间
+        cancel_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 取消时间
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedOrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          title: 订单
+        product:
+          type: integer
+          nullable: true
+          title: 关联商品
+        product_name:
+          type: string
+          title: 商品名称
+          maxLength: 64
+        product_image:
+          type: string
+          format: uri
+          title: 商品图片
+          maxLength: 200
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 单价
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 数量
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 小计
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedPayment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          title: 关联订单
+        customer:
+          type: integer
+          title: 用户
+        pay_no:
+          type: string
+          readOnly: true
+          title: 支付流水号
+        pay_type:
+          allOf:
+            - $ref: "#/components/schemas/PayTypeEnum"
+          title: 支付方式
+        pay_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 支付金额
+        status:
+          allOf:
+            - $ref: "#/components/schemas/PaymentStatusEnum"
+          title: 支付状态
+        transaction_id:
+          type: string
+          nullable: true
+          title: 微信支付单号
+          maxLength: 64
+        callback_data:
+          title: 回调数据
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category:
+          allOf:
+            - $ref: "#/components/schemas/Category"
+          readOnly: true
+        category_id:
+          type: integer
+          writeOnly: true
+          title: 商品分类
+        name:
+          type: string
+          title: 商品名称
+          maxLength: 64
+        image:
+          type: string
+          format: uri
+          title: 主图
+          maxLength: 200
+        images:
+          nullable: true
+          title: 轮播图
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 售价
+        original_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 原价
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 库存
+        sales:
+          type: integer
+          readOnly: true
+          title: 销量
+        description:
+          type: string
+          title: 商品描述
+        is_on_sale:
+          type: boolean
+          title: 是否上架
+        on_sale_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: 上架时间
+        sort:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          title: 排序
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 最后更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedRefund:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          title: 订单
+        payment:
+          type: integer
+          title: 支付记录
+        refund_no:
+          type: string
+          readOnly: true
+          title: 退款单号
+        refund_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 退款金额
+        reason:
+          type: string
+          title: 退款原因
+          maxLength: 200
+        status:
+          allOf:
+            - $ref: "#/components/schemas/RefundStatusEnum"
+          title: 退款状态
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PatchedUserCoupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+          title: 用户
+        coupon:
+          allOf:
+            - $ref: "#/components/schemas/Coupon"
+          readOnly: true
+        status:
+          allOf:
+            - $ref: "#/components/schemas/UserCouponStatusEnum"
+          title: 状态
+        used_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 使用时间
+        expire_time:
+          type: string
+          format: date-time
+          title: 过期时间
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+    PayTypeEnum:
+      enum:
+        - wechat
+        - cash
+      type: string
+      description: |-
+        * `wechat` - 微信支付
+        * `cash` - 货到付款
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          title: 关联订单
+        customer:
+          type: integer
+          title: 用户
+        pay_no:
+          type: string
+          readOnly: true
+          title: 支付流水号
+        pay_type:
+          allOf:
+            - $ref: "#/components/schemas/PayTypeEnum"
+          title: 支付方式
+        pay_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 支付金额
+        status:
+          allOf:
+            - $ref: "#/components/schemas/PaymentStatusEnum"
+          title: 支付状态
+        transaction_id:
+          type: string
+          nullable: true
+          title: 微信支付单号
+          maxLength: 64
+        callback_data:
+          title: 回调数据
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - customer
+        - id
+        - is_deleted
+        - order
+        - pay_amount
+        - pay_no
+        - pay_type
+        - updated_at
+    PaymentStatusEnum:
+      enum:
+        - pending
+        - success
+        - fail
+      type: string
+      description: |-
+        * `pending` - 待支付
+        * `success` - 支付成功
+        * `fail` - 支付失败
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        category:
+          allOf:
+            - $ref: "#/components/schemas/Category"
+          readOnly: true
+        category_id:
+          type: integer
+          writeOnly: true
+          title: 商品分类
+        name:
+          type: string
+          title: 商品名称
+          maxLength: 64
+        image:
+          type: string
+          format: uri
+          title: 主图
+          maxLength: 200
+        images:
+          nullable: true
+          title: 轮播图
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 售价
+        original_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 原价
+        stock:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: 库存
+        sales:
+          type: integer
+          readOnly: true
+          title: 销量
+        description:
+          type: string
+          title: 商品描述
+        is_on_sale:
+          type: boolean
+          title: 是否上架
+        on_sale_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: 上架时间
+        sort:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          title: 排序
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 最后更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - category
+        - category_id
+        - created_at
+        - id
+        - image
+        - is_deleted
+        - name
+        - original_price
+        - price
+        - sales
+        - updated_at
+    Refund:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          title: 订单
+        payment:
+          type: integer
+          title: 支付记录
+        refund_no:
+          type: string
+          readOnly: true
+          title: 退款单号
+        refund_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: 退款金额
+        reason:
+          type: string
+          title: 退款原因
+          maxLength: 200
+        status:
+          allOf:
+            - $ref: "#/components/schemas/RefundStatusEnum"
+          title: 退款状态
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - created_at
+        - id
+        - is_deleted
+        - order
+        - payment
+        - reason
+        - refund_amount
+        - refund_no
+        - updated_at
+    RefundStatusEnum:
+      enum:
+        - pending
+        - success
+        - fail
+      type: string
+      description: |-
+        * `pending` - 退款中
+        * `success` - 退款成功
+        * `fail` - 退款失败
+    TypeEnum:
+      enum:
+        - reduce
+        - discount
+        - points
+      type: string
+      description: |-
+        * `reduce` - 满减券
+        * `discount` - 折扣券
+        * `points` - 积分券
+    UserCoupon:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        customer:
+          type: integer
+          title: 用户
+        coupon:
+          allOf:
+            - $ref: "#/components/schemas/Coupon"
+          readOnly: true
+        status:
+          allOf:
+            - $ref: "#/components/schemas/UserCouponStatusEnum"
+          title: 状态
+        used_time:
+          type: string
+          format: date-time
+          nullable: true
+          title: 使用时间
+        expire_time:
+          type: string
+          format: date-time
+          title: 过期时间
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 创建时间
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: 更新时间
+        is_deleted:
+          type: boolean
+          readOnly: true
+          title: 软删除
+      required:
+        - coupon
+        - created_at
+        - customer
+        - expire_time
+        - id
+        - is_deleted
+        - updated_at
+    UserCouponStatusEnum:
+      enum:
+        - unused
+        - used
+        - expired
+      type: string
+      description: |-
+        * `unused` - 未使用
+        * `used` - 已使用
+        * `expired` - 已过期
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
