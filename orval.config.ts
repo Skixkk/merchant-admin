@@ -12,7 +12,7 @@ export default defineConfig({
       override: {
         mutator: {
           path: './src/api/mutator.ts',
-          name: 'customAxios',
+          name: 'customAxios', // 必须和上面导出名称完全一致
         },
       },
     },
