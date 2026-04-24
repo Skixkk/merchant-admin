@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# VitePress 缓存（自动生成，必须忽略）
+docs/.vitepress/cache/
+
+# VitePress 构建产物（dist 是打包后的文件，也建议忽略）
+docs/.vitepress/dist/
