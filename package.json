@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "vue": "^3.5.32",
@@ -20,6 +23,7 @@
     "orval": "^8.8.1",
     "typescript": "~6.0.2",
     "vite": "^8.0.10",
+    "vitepress": "^2.0.0-alpha.17",
     "vue-tsc": "^3.2.7"
   }
 }
