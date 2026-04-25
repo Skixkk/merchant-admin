@@ -1,8 +1,28 @@
 {
   "name": "merchant-admin",
+  "version": "0.0.1",
   "private": true,
-  "version": "0.0.0",
+  "description": "Caneat Saas food delivery merchant management backend.",
+  "keywords": [
+    "Saas",
+    "admin",
+    "backend"
+  ],
+  "homepage": "https://github.com/Skixkk/merchant-admin#readme",
+  "bugs": {
+    "url": "https://github.com/Skixkk/merchant-admin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skixkk/merchant-admin.git"
+  },
+  "license": "ISC",
+  "author": "https://github.com/Skixkk",
   "type": "module",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
