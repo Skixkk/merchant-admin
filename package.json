@@ -12,6 +12,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "pinia": "^3.0.4",
     "vue": "^3.5.32",
     "vue-router": "^4.6.4"
   },
