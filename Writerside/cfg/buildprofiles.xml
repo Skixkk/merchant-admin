@@ -3,7 +3,12 @@
 <buildprofiles xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-profiles.xsd"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <variables></variables>
+    <variables>
+        <!-- 👇 替换为你的 Algolia 配置 -->
+        <algolia-id>你的Algolia Application ID</algolia-id>
+        <algolia-index>merchant_admin_docs</algolia-index>
+        <algolia-api-key>你的Algolia Search-Only API Key</algolia-api-key>
+    </variables>
     <build-profile instance="Guide">
         <variables>
             <noindex-content>false</noindex-content>

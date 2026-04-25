@@ -8,6 +8,8 @@ export default defineConfig({
   description: "saas admin & guide",
   
   // 👇 新增这一行，固定写法，必须加
+  // 与仓库名完全一致，前后斜杠不可省略
+  // '/merchant-admin/' '/merchant-admin/'
   base: '/merchant-admin/',
 
   themeConfig: {
