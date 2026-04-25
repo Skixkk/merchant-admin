@@ -5,11 +5,11 @@ import { getToken, removeToken } from '@/utils/auth';
 import router from '@/router';
 
 export const customAxios = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api/v1',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1',
   timeout: 15000,
 });
 
-// 请求拦截器
+// 请求拦截器（自动添加 Token）
 customAxios.interceptors.request.use(
   (config) => {
     const token = getToken();
@@ -21,7 +21,7 @@ customAxios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// 响应拦截器
+// 响应拦截器（统一处理错误）
 customAxios.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {

@@ -19,6 +19,11 @@
         <toc-element topic="逐行-分模块详细解释这个-GitHub-Actions-工作流配置文件.md"/>
         <toc-element topic="根据你提供的实际项目目录结构，修改并优化了-GitHub-Pages-部署配置文件.md"/>
         <toc-element topic="静态资源嵌入.md"/>
+        <toc-element topic="Orval-是专门为前端-TypeScript-打造的-OpenAPI-生成工具.md"/>
+        <toc-element
+                topic="uni-app-Vue-Vite-TS-技术栈，最佳方案是「Orval-生成-TypeScript-类型定义-自定义封装-uni-request-请求层」.md"/>
+        <toc-element
+                topic="Electron-Vue-Vite-TS-桌面软件技术栈，AI提供的方案是「Orval-生成-TypeScript-Axios-SDK-tanstack-vue-query」.md"/>
     </toc-element>
     <toc-element topic="orval-的两种方式.md"/>
     <toc-element topic="orval按目录拆分.md"/>

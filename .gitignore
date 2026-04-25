@@ -28,3 +28,6 @@ docs/.vitepress/cache/
 
 # VitePress 构建产物（dist 是打包后的文件，也建议忽略）
 docs/.vitepress/dist/
+
+# 环境
+.env
