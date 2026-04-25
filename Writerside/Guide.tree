@@ -9,4 +9,7 @@
     <toc-element topic="starter-topic.md"/>
     <toc-element topic="Prompt.md"/>
     <toc-element topic="TODO.md"/>
+    <toc-element topic="Tutotials.md"/>
+    <toc-element topic="orval-的两种方式.md"/>
+    <toc-element topic="orval按目录拆分.md"/>
 </instance-profile>
