@@ -8,7 +8,7 @@ export default defineConfig({
   description: "saas admin & guide",
   
   // 👇 新增这一行，固定写法，必须加
-  base: '/docs/',
+  base: '/merchant-admin/',
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
