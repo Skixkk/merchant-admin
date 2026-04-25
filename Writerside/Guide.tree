@@ -9,7 +9,17 @@
     <toc-element topic="starter-topic.md"/>
     <toc-element topic="Prompt.md"/>
     <toc-element topic="TODO.md"/>
-    <toc-element topic="Tutotials.md"/>
+    <toc-element topic="Tutotials.md">
+        <toc-element topic="样式失效修改路径.md"/>
+        <toc-element topic="gitignore-vitepress-file.md"/>
+        <toc-element topic="writerside部署到-Nginx.md"/>
+        <toc-element topic="Writerside-本地测试-byhttp-server.md"/>
+        <toc-element topic="Writerside-本地测试-by-python.md"/>
+        <toc-element topic="http-server-两条命令核心区别.md"/>
+        <toc-element topic="逐行-分模块详细解释这个-GitHub-Actions-工作流配置文件.md"/>
+        <toc-element topic="根据你提供的实际项目目录结构，修改并优化了-GitHub-Pages-部署配置文件.md"/>
+        <toc-element topic="静态资源嵌入.md"/>
+    </toc-element>
     <toc-element topic="orval-的两种方式.md"/>
     <toc-element topic="orval按目录拆分.md"/>
 </instance-profile>
