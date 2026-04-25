@@ -76,31 +76,31 @@ npx orval
 
 既然已经生成成功了，**直接在 Vue 组件中使用**：
 
-```vue
+```html
 
 <template>
-  <div class="product-list">
-    <h2>商品列表</h2>
-    <div v-if="isLoading">加载中...</div>
-    <div v-else-if="isError">加载失败: {{ error?.message }}</div>
-    <ul v-else>
-      <li v-for="product in data" :key="product.id">
-        {{ product.name }} - ¥{{ product.price }}
-      </li>
-    </ul>
-  </div>
+    <div class="product-list">
+        <h2>商品列表</h2>
+        <div v-if="isLoading">加载中...</div>
+        <div v-else-if="isError">加载失败: {{ error?.message }}</div>
+        <ul v-else>
+            <li v-for="product in data" :key="product.id">
+                {{ product.name }} - ¥{{ product.price }}
+            </li>
+        </ul>
+    </div>
 </template>
+```
 
-<script setup lang="ts">
+```typescript
   import {useProductsList} from '@/api';
 
-  // 直接使用生成的 hook
-  const {data, isLoading, isError, error} = useProductsList({
+// 直接使用生成的 hook
+const {data, isLoading, isError, error} = useProductsList({
     axios: {
-      baseURL: 'http://127.0.0.1:8000/api/v1',
+        baseURL: 'http://127.0.0.1:8000/api/v1',
     },
-  });
-</script>
+});
 ```
 
 ---
