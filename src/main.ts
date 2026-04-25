@@ -4,8 +4,8 @@ import {createPinia} from 'pinia';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
-import {QueryClient, QueryClientProvider} from '@tanstack/vue-query';
-import axios from 'axios'; // 导入 axios
+import {QueryClient, VueQueryPlugin} from '@tanstack/vue-query'; // 修复：替换 QueryClientProvider 为 VueQueryPlugin
+import axios from 'axios';
 
 import App from './App.vue';
 import router from './router';
@@ -36,6 +36,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(pinia);
 app.use(router);
 app.use(ElementPlus);
-app.use(QueryClientProvider, {client: queryClient});
+app.use(VueQueryPlugin, {client: queryClient}); // 修复：使用 VueQueryPlugin 替代 QueryClientProvider
 
 app.mount('#app');
