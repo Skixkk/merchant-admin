@@ -36,6 +36,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(pinia);
 app.use(router);
 app.use(ElementPlus);
-app.use(VueQueryPlugin, {client: queryClient}); // 修复：使用 VueQueryPlugin 替代 QueryClientProvider
+app.use(VueQueryPlugin, {queryClient: queryClient}); // 修复：Vue Query v5 正确配置键名为 queryClient
 
 app.mount('#app');
