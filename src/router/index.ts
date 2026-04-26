@@ -52,8 +52,8 @@ const router = createRouter({
     routes,
 });
 
-// 路由守卫
-router.beforeEach((to, from, next) => {
+// 路由守卫 - 移除未使用的 `from` 参数
+router.beforeEach((to, _, next) => {
     const token = getToken();
     if (to.meta.requiresAuth && !token) {
         next('/login');

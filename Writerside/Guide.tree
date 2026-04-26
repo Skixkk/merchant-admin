@@ -35,6 +35,8 @@
         <toc-element topic="Writerside-Algolia-完整配置指南-没配置.md"/>
         <toc-element topic="不使用-writerside部署了-删除全部部署配置.md"/>
         <toc-element topic="升级-deploy-about-vitepress.md"/>
+        <toc-element topic="target-ESNext-与-target-es2023-有什么区别.md"/>
+        <toc-element topic="module-CommonJS-和-module-esnext-的区别.md"/>
     </toc-element>
     <toc-element topic="orval-的两种方式.md"/>
     <toc-element topic="orval按目录拆分.md"/>
