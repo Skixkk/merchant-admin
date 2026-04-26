@@ -1,36 +1,99 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    /* 基础设置 */
+    // 定义编译输出的JavaScript版本
+    // - Vue 3 supports ES2016+
+    // 可选值包括：ES3、ES5、ES6/ES2015、ES2016、ES2017、...、ESNext
+    // 如果将target设置为ES5，该语法将被降级处理。
     "target": "ESNext",
+    // ESNext
     "lib": [
-      "ESNext"
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
     ],
+    // 指定模块系统的种类。可选值包括：CommonJS、ES6、UMD、AMD、System、None。
     "module": "esnext",
+    //   这将包含 @types/node、等 packages 的类型
     "types": [
       "node"
     ],
+    // 自定义类型声明文件根目录 这将只包含 ./types 目录下的.d.ts声明文件
+    "typeRoots": [
+      "./types"
+    ],
+    // 编译优化，跳过node_modules中类型检查，提升编译速度。
     "skipLibCheck": true,
     /* Bundler mode */
+    // 模块解析策略，决定 import 路径如何被定位。
+    //classic：传统TypeScript解析方式
+    //node：Node.js风格的模块解析方式
     "moduleResolution": "bundler",
+    // 允许导入 .ts 扩展名
     "allowImportingTsExtensions": true,
+    // 严格遵循模块语法
     "verbatimModuleSyntax": true,
+    // 强制模块检测
     "moduleDetection": "force",
-    "noEmit": false,
+    // true 不生成输出文件
+    "noEmit": true,
     /* Linting */
+    // "strict": false, // TypeScript 严格模式: true 开启
+    // true 允许未使用的局部变量
     "noUnusedLocals": true,
+    // 允许未使用的参数
     "noUnusedParameters": true,
+    // 不允许使用可擦除的语法
     "erasableSyntaxOnly": true,
+    // 允许 switch 语句的默认分支掉落
     "noFallthroughCasesInSwitch": true,
+    // true 禁止隐式any类型。
+    "noImplicitAny": false,
+    // false 开启后，null和undefined必须显式处理。
+    "strictNullChecks": false,
     "composite": true,
-    // 关键配置：路径别名
+    // true 生成类型声明文件.d.ts。
+    "declaration": true,
+    // 启用装饰器支持
+    "experimentalDecorators": true,
+    // 强制一致的文件名大小写。
+    "forceConsistentCasingInFileNames": true,
+    // !!! 下面生产的时候要关掉
+    // 启用增量编译。首次编译后生成.tsbuildinfo缓存文件，加快下次编译速度。
+    "incremental": true,
+    // 是否生成.map文件用于调试。
+    "sourceMap": true,
+    // 将源代码嵌入到Source Map中。
+    // 此配置有助于线上调试时查看源代码内容。
+    // 注意 生产 风险
+    "inlineSources": true,
+    // 源文件根目录, 保持源码结构的清晰性
+    "rootDir": "./src",
+    // 编译后的JavaScript文件输出目录。 有的项目是 "outDir": "./build"
+    "outDir": "./dist",
+    /* 模块路径映射 路径别名 */
+    // 配置模块导入时的基础目录。
     "baseUrl": ".",
+    // 设置路径别名
     "paths": {
       "@/*": [
         "src/*"
       ]
     }
   },
+  //  //  精确指定要编译的文件。不推荐项目使用该方式。 just learn  used.
+  //  "files": [
+  // "src/index.ts"
+  //  ],
+  //  指定需要编译的文件路径或模式。
   "include": [
+    "src/**/*",
     "vite.config.ts"
+  ],
+  //  指定需要排除的文件路径或模式。
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }
