@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <aside class="sidebar">
-      <div class="logo">Merchant Admin</div>
+      <div class="logo">Merchant</div>
       <nav class="nav">
         <router-link to="/dashboard" class="nav-item">仪表盘</router-link>
         <router-link to="/categories" class="nav-item">分类管理</router-link>
