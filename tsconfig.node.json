@@ -10,8 +10,6 @@
     // ESNext
     "lib": [
       "ESNext",
-      "DOM",
-      "DOM.Iterable"
     ],
     // 指定模块系统的种类。可选值包括：CommonJS、ES6、UMD、AMD、System、None。
     "module": "esnext",

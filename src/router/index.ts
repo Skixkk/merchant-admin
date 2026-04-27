@@ -1,7 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router';
+import type {RouteRecordRaw} from 'vue-router';
 import {getToken} from '@/utils/auth';
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
     {
         path: '/login',
         name: 'Login',
