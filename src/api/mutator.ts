@@ -30,7 +30,8 @@ customAxios.interceptors.response.use(
       router.push('/login');
       ElMessage.error('登录已过期，请重新登录');
     } else {
-      ElMessage.error(error.response?.data?.message || '请求失败');
+      // 修正：添加类型断言解决 unknown 类型报错
+      ElMessage.error((error.response?.data as any)?.message || '请求失败');
     }
     return Promise.reject(error);
   }
