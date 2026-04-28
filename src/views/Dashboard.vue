@@ -16,7 +16,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #409eff;">
-              <el-icon :size="30"><Document/></el-icon>
+              <el-icon :size="30">
+                <Document/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalOrders }}</div>
@@ -29,7 +31,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #67c23a;">
-              <el-icon :size="30"><Money/></el-icon>
+              <el-icon :size="30">
+                <Money/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">¥{{ stats.totalRevenue }}</div>
@@ -42,7 +46,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #e6a23c;">
-              <el-icon :size="30"><Box/></el-icon>
+              <el-icon :size="30">
+                <Box/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalProducts }}</div>
@@ -55,7 +61,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #f56c6c;">
-              <el-icon :size="30"><User/></el-icon>
+              <el-icon :size="30">
+                <User/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalUsers }}</div>
@@ -76,25 +84,32 @@
               <el-button link type="primary" @click="goToOrders">查看全部</el-button>
             </div>
           </template>
-          <el-table :data="recentOrders" v-loading="isLoading" stripe>
-            <el-table-column prop="id" label="订单ID" width="100"/>
-            <el-table-column prop="order_no" label="订单号" width="180"/>
-            <el-table-column prop="total_amount" label="金额" width="120">
-              <template #default="{ row: _row }">
-                ¥{{ _row.total_amount }}
+          <!-- 仅修改表格列，展示指定字段 -->
+          <el-table :data="recentOrders" v-loading="isLoading" stripe border>
+            <el-table-column prop="id" label="ID" width="80" align="center"/>
+            <el-table-column prop="order_no" label="订单号" width="200" align="center"/>
+            <el-table-column prop="total_amount" label="商品总价" width="120" align="center">
+              <template #default="{ row }">¥{{ row.total_amount }}</template>
+            </el-table-column>
+            <el-table-column prop="coupon_amount" label="优惠金额" width="120" align="center">
+              <template #default="{ row }">¥{{ row.coupon_amount }}</template>
+            </el-table-column>
+            <el-table-column prop="delivery_fee" label="配送费" width="120" align="center">
+              <template #default="{ row }">¥{{ row.delivery_fee }}</template>
+            </el-table-column>
+            <el-table-column prop="pay_amount" label="实付金额" width="120" align="center">
+              <template #default="{ row }">¥{{ row.pay_amount }}</template>
+            </el-table-column>
+            <el-table-column prop="status" label="订单状态" width="120" align="center">
+              <template #default="{ row }">
+                <el-tag :type="getStatusType(row.status)">{{ getStatusText(row.status) }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="100">
-              <template #default="{ row: _row }">
-                <el-tag :type="getStatusType(_row.status)">
-                  {{ getStatusText(_row.status) }}
-                </el-tag>
-              </template>
+            <el-table-column prop="created_at" label="创建时间" width="200" align="center">
+              <template #default="{ row }">{{ formatDate(row.created_at) }}</template>
             </el-table-column>
-            <el-table-column prop="created_at" label="创建时间" width="180">
-              <template #default="{ row: _row }">
-                {{ formatDate(_row.created_at) }}
-              </template>
+            <el-table-column prop="finish_time" label="完成时间" width="200" align="center">
+              <template #default="{ row }">{{ row.finish_time ? formatDate(row.finish_time) : '-' }}</template>
             </el-table-column>
           </el-table>
         </el-card>
@@ -104,10 +119,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { ElMessage } from 'element-plus';
-import { Refresh, Document, Money, Box, User } from '@element-plus/icons-vue';
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {ElMessage} from 'element-plus';
+import {Refresh, Document, Money, Box, User} from '@element-plus/icons-vue';
 import axios from 'axios';
 
 const router = useRouter();
@@ -158,12 +173,11 @@ const fetchStats = async () => {
     const customersResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/customers/');
     // 商品总数
     const productsResponse = await axios.get('http://freedom.localhost:8000/api/v1/common/products/');
-    // 🔥 总销售额：调用新接口获取真实数据
+    // 总销售额
     const salesResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/statistics/total-sales/');
 
     stats.value = {
       totalOrders: orderItemsResponse.data.count || 0,
-      // 直接使用接口返回的总销售额
       totalRevenue: salesResponse.data.total_sales.toFixed(2),
       totalProducts: productsResponse.data.count || 0,
       totalUsers: customersResponse.data.count || 0
