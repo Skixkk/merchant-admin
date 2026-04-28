@@ -162,6 +162,9 @@ const fetchStats = async () => {
     // 🔥 从 order-items API 获取 count 作为订单总数
     const orderItemsResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/order-items/');
 
+    // 🔥 从 customers API 获取 count 作为用户总数
+    const customersResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/customers/');
+
     // 计算总销售额
     const orderItems = orderItemsResponse.data.results || [];
     const totalRevenue = orderItems.reduce((sum: number, item: any) => {
@@ -169,10 +172,10 @@ const fetchStats = async () => {
     }, 0);
 
     stats.value = {
-      totalOrders: orderItemsResponse.data.count || 0, // 🔥 使用 API 返回的 count
+      totalOrders: orderItemsResponse.data.count || 0, // 🔥 使用 order-items API 返回的 count
       totalRevenue: totalRevenue.toFixed(2),
       totalProducts: orderItems.length,
-      totalUsers: 89 // 暂时使用模拟数据，等有用户 API 后替换
+      totalUsers: customersResponse.data.count || 0 // 🔥 使用 customers API 返回的 count
     };
   } catch (error) {
     console.error('获取统计数据失败:', error);
