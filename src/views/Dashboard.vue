@@ -156,16 +156,23 @@ const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleString('zh-CN');
 };
 
-// 获取统计数据（模拟，实际项目中根据后端 API 调整）
+// 获取统计数据 - 使用真实 API
 const fetchStats = async () => {
   try {
-    // 这里可以根据实际后端 API 调整
-    // 暂时使用模拟数据
+    // 🔥 从 order-items API 获取 count 作为订单总数
+    const orderItemsResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/order-items/');
+
+    // 计算总销售额
+    const orderItems = orderItemsResponse.data.results || [];
+    const totalRevenue = orderItems.reduce((sum: number, item: any) => {
+      return sum + parseFloat(item.subtotal);
+    }, 0);
+
     stats.value = {
-      totalOrders: 128,
-      totalRevenue: '12580.50',
-      totalProducts: 56,
-      totalUsers: 89
+      totalOrders: orderItemsResponse.data.count || 0, // 🔥 使用 API 返回的 count
+      totalRevenue: totalRevenue.toFixed(2),
+      totalProducts: orderItems.length,
+      totalUsers: 89 // 暂时使用模拟数据，等有用户 API 后替换
     };
   } catch (error) {
     console.error('获取统计数据失败:', error);
