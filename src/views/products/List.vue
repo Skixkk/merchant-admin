@@ -11,7 +11,6 @@
     </div>
 
     <el-card>
-      <!-- 修正：安全访问响应数据，先解构出 data 主体 -->
       <el-table :data="products" v-loading="isLoading" stripe>
         <el-table-column prop="id" label="ID" width="80"/>
         <el-table-column prop="name" label="商品名称"/>
@@ -47,27 +46,31 @@
 
 <script setup lang="ts">
 import {useRouter} from 'vue-router';
-import { computed} from 'vue';
-import {useCommonProductsList} from '@/api';
+import {ref, onMounted} from 'vue';
+import axios from 'axios';
 import type {Product} from '@/api';
 import {Plus} from '@element-plus/icons-vue';
 
 const router = useRouter();
-const {data, isLoading} = useCommonProductsList();
+const products = ref<Product[]>([]);
+const isLoading = ref(false);
 
-// 安全提取商品列表数据
-const products = computed<Product[]>(() => {
-  if (!data.value) return [];
+// 直接用 axios 测试
+const fetchProducts = async () => {
+  isLoading.value = true;
+  try {
+    const response = await axios.get('http://freedom.localhost:8000/api/v1/common/products/');
+    console.log('直接 axios 请求返回:', response.data);
+    products.value = response.data.results || [];
+  } catch (error) {
+    console.error('请求失败:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
 
-  // 处理 orval 可能的响应结构
-  const responseData = data.value as any;
-
-  // 尝试多种可能的数据结构
-  if (responseData.results) return responseData.results;
-  if (responseData.data?.results) return responseData.data.results;
-  if (Array.isArray(responseData)) return responseData;
-
-  return [];
+onMounted(() => {
+  fetchProducts();
 });
 </script>
 

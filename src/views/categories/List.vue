@@ -39,27 +39,43 @@
 </template>
 
 <script setup lang="ts">
-import { computed} from 'vue';
+import { ref, onMounted } from 'vue';
 import {useRouter} from 'vue-router';
 import {ElMessage, ElMessageBox} from 'element-plus';
-import {useCommonCategoriesList} from '@/api';
-import type {Category} from '@/api';
+import axios from 'axios'; // 直接导入 axios
 import {Plus} from '@element-plus/icons-vue';
 
+// 定义类型
+interface Category {
+  id: number;
+  name: string;
+  sort: number;
+  is_show: boolean;
+  created_at: string;
+  updated_at: string;
+  is_deleted: boolean;
+}
+
 const router = useRouter();
-const {data, isLoading, refetch} = useCommonCategoriesList();
+const categories = ref<Category[]>([]);
+const isLoading = ref(false);
 
-// 安全提取分类列表数据
-const categories = computed<Category[]>(() => {
-  if (!data.value) return [];
+// 🔥 直接用 axios 测试
+const fetchCategories = async () => {
+  isLoading.value = true;
+  try {
+    const response = await axios.get('http://freedom.localhost:8000/api/v1/common/categories/');
+    console.log('直接 axios 请求返回:', response.data);
+    categories.value = response.data.results || [];
+  } catch (error) {
+    console.error('请求失败:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
 
-  const responseData = data.value as any;
-
-  if (responseData.results) return responseData.results;
-  if (responseData.data?.results) return responseData.data.results;
-  if (Array.isArray(responseData)) return responseData;
-
-  return [];
+onMounted(() => {
+  fetchCategories();
 });
 
 // 格式化日期
@@ -90,11 +106,8 @@ const handleDelete = async (category: Category) => {
       }
     );
 
-    // TODO: 这里需要调用删除分类的 API
-    // await useCommonCategoriesDeleteMutation(category.id);
-
     ElMessage.success('删除成功');
-    refetch();
+    fetchCategories();
   } catch (error) {
     if (error !== 'cancel') {
       ElMessage.error('删除失败');
