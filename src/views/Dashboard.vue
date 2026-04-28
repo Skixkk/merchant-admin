@@ -84,10 +84,8 @@
               <el-button link type="primary" @click="goToOrders">查看全部</el-button>
             </div>
           </template>
-          <!-- 仅修改表格列，展示指定字段 -->
           <el-table :data="recentOrders" v-loading="isLoading" stripe border>
-            <el-table-column prop="id" label="ID" width="80" align="center"/>
-            <el-table-column prop="order_no" label="订单号" width="200" align="center"/>
+            <el-table-column prop="order_no" label="订单号" width="250" align="center"/>
             <el-table-column prop="total_amount" label="商品总价" width="120" align="center">
               <template #default="{ row }">¥{{ row.total_amount }}</template>
             </el-table-column>
