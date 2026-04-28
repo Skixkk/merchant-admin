@@ -16,9 +16,7 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #409eff;">
-              <el-icon :size="30">
-                <Document/>
-              </el-icon>
+              <el-icon :size="30"><Document/></el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalOrders }}</div>
@@ -31,9 +29,7 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #67c23a;">
-              <el-icon :size="30">
-                <Money/>
-              </el-icon>
+              <el-icon :size="30"><Money/></el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">¥{{ stats.totalRevenue }}</div>
@@ -46,9 +42,7 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #e6a23c;">
-              <el-icon :size="30">
-                <Box/>
-              </el-icon>
+              <el-icon :size="30"><Box/></el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalProducts }}</div>
@@ -61,9 +55,7 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #f56c6c;">
-              <el-icon :size="30">
-                <User/>
-              </el-icon>
+              <el-icon :size="30"><User/></el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalUsers }}</div>
@@ -112,16 +104,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
-import {ElMessage} from 'element-plus';
-import {Refresh, Document, Money, Box, User} from '@element-plus/icons-vue';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
+import { Refresh, Document, Money, Box, User } from '@element-plus/icons-vue';
 import axios from 'axios';
 
 const router = useRouter();
 const isLoading = ref(false);
 
-// 统计数据
 const stats = ref({
   totalOrders: 0,
   totalRevenue: '0.00',
@@ -129,10 +120,8 @@ const stats = ref({
   totalUsers: 0
 });
 
-// 最近订单
 const recentOrders = ref<any[]>([]);
 
-// 订单状态类型映射
 const getStatusType = (status: string): string => {
   const typeMap: Record<string, string> = {
     'pending': 'warning',
@@ -145,7 +134,6 @@ const getStatusType = (status: string): string => {
   return typeMap[status] || 'info';
 };
 
-// 订单状态文本映射
 const getStatusText = (status: string): string => {
   const textMap: Record<string, string> = {
     'pending': '待支付',
@@ -158,12 +146,10 @@ const getStatusText = (status: string): string => {
   return textMap[status] || status;
 };
 
-// 格式化日期
 const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleString('zh-CN');
 };
 
-// 获取统计数据 - 使用真实 API
 const fetchStats = async () => {
   try {
     // 订单总数
@@ -172,13 +158,13 @@ const fetchStats = async () => {
     const customersResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/customers/');
     // 商品总数
     const productsResponse = await axios.get('http://freedom.localhost:8000/api/v1/common/products/');
-
-    const orderItems = orderItemsResponse.data.results || [];
-    const totalRevenue = orderItems.reduce((sum: number, item: any) => sum + parseFloat(item.subtotal || 0), 0);
+    // 🔥 总销售额：调用新接口获取真实数据
+    const salesResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/statistics/total-sales/');
 
     stats.value = {
       totalOrders: orderItemsResponse.data.count || 0,
-      totalRevenue: totalRevenue.toFixed(2),
+      // 直接使用接口返回的总销售额
+      totalRevenue: salesResponse.data.total_sales.toFixed(2),
       totalProducts: productsResponse.data.count || 0,
       totalUsers: customersResponse.data.count || 0
     };
