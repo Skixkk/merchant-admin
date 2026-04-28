@@ -16,7 +16,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #409eff;">
-              <el-icon :size="30"><Document/></el-icon>
+              <el-icon :size="30">
+                <Document/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalOrders }}</div>
@@ -29,7 +31,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #67c23a;">
-              <el-icon :size="30"><Money/></el-icon>
+              <el-icon :size="30">
+                <Money/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">¥{{ stats.totalRevenue }}</div>
@@ -42,7 +46,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #e6a23c;">
-              <el-icon :size="30"><Box/></el-icon>
+              <el-icon :size="30">
+                <Box/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalProducts }}</div>
@@ -55,7 +61,9 @@
         <el-card class="stat-card">
           <div class="stat-content">
             <div class="stat-icon" style="background: #f56c6c;">
-              <el-icon :size="30"><User/></el-icon>
+              <el-icon :size="30">
+                <User/>
+              </el-icon>
             </div>
             <div class="stat-info">
               <div class="stat-value">{{ stats.totalUsers }}</div>
@@ -104,11 +112,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { ElMessage } from 'element-plus';
-import { Refresh, Document, Money, Box, User } from '@element-plus/icons-vue';
-// 直接导入 axios，使用完整 URL 请求
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {ElMessage} from 'element-plus';
+import {Refresh, Document, Money, Box, User} from '@element-plus/icons-vue';
 import axios from 'axios';
 
 const router = useRouter();
@@ -159,35 +166,32 @@ const formatDate = (dateString: string): string => {
 // 获取统计数据 - 使用真实 API
 const fetchStats = async () => {
   try {
-    // 🔥 从 order-items API 获取 count 作为订单总数
+    // 订单总数
     const orderItemsResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/order-items/');
-
-    // 🔥 从 customers API 获取 count 作为用户总数
+    // 用户总数
     const customersResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/customers/');
+    // 商品总数
+    const productsResponse = await axios.get('http://freedom.localhost:8000/api/v1/common/products/');
 
-    // 计算总销售额
     const orderItems = orderItemsResponse.data.results || [];
-    const totalRevenue = orderItems.reduce((sum: number, item: any) => {
-      return sum + parseFloat(item.subtotal);
-    }, 0);
+    const totalRevenue = orderItems.reduce((sum: number, item: any) => sum + parseFloat(item.subtotal || 0), 0);
 
     stats.value = {
-      totalOrders: orderItemsResponse.data.count || 0, // 🔥 使用 order-items API 返回的 count
+      totalOrders: orderItemsResponse.data.count || 0,
       totalRevenue: totalRevenue.toFixed(2),
-      totalProducts: orderItems.length,
-      totalUsers: customersResponse.data.count || 0 // 🔥 使用 customers API 返回的 count
+      totalProducts: productsResponse.data.count || 0,
+      totalUsers: customersResponse.data.count || 0
     };
   } catch (error) {
     console.error('获取统计数据失败:', error);
   }
 };
 
-// 获取最近订单 - 直接使用完整 URL
 const fetchRecentOrders = async () => {
   isLoading.value = true;
   try {
     const response = await axios.get('http://freedom.localhost:8000/api/v1/business/orders/');
-    recentOrders.value = (response.data.results || []).slice(0, 5); // 只显示最近 5 条
+    recentOrders.value = (response.data.results || []).slice(0, 5);
   } catch (error) {
     console.error('获取最近订单失败:', error);
     ElMessage.error('获取最近订单失败');
@@ -196,13 +200,11 @@ const fetchRecentOrders = async () => {
   }
 };
 
-// 刷新所有数据
 const handleRefresh = () => {
   fetchStats();
   fetchRecentOrders();
 };
 
-// 跳转到订单列表
 const goToOrders = () => {
   router.push('/orders');
 };
