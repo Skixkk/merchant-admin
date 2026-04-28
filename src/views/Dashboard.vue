@@ -27,21 +27,28 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
-        <el-card class="stat-card">
-          <div class="stat-content">
-            <div class="stat-icon" style="background: #67c23a;">
-              <el-icon :size="30">
-                <Money/>
-              </el-icon>
+
+      <!-- 🔥 总销售额：Tooltip 包裹整列，鼠标悬浮卡片即显示 -->
+      <!--  总销售额（Total Sales Revenue）是指所有出售商品或提供服务的销售额总和 -->
+      <!-- 总销售额=已完成订单的实付金额的总和 所有已完成订单的实付金额相加的总收入 -->
+      <el-tooltip content="总销售额 = 已完成订单的实付金额的总和" effect="dark" placement="top">
+        <el-col :span="6">
+          <el-card class="stat-card">
+            <div class="stat-content">
+              <div class="stat-icon" style="background: #67c23a;">
+                <el-icon :size="30">
+                  <Money/>
+                </el-icon>
+              </div>
+              <div class="stat-info">
+                <div class="stat-value">¥{{ stats.totalRevenue }}</div>
+                <div class="stat-label">总销售额</div>
+              </div>
             </div>
-            <div class="stat-info">
-              <div class="stat-value">¥{{ stats.totalRevenue }}</div>
-              <div class="stat-label">总销售额</div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
+          </el-card>
+        </el-col>
+      </el-tooltip>
+
       <el-col :span="6">
         <el-card class="stat-card">
           <div class="stat-content">
