@@ -21,7 +21,7 @@
               </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ stats.totalOrders }}</div>
+              <div class="stat-value">{{ isStatsLoading ? '正在加载中...' : (stats.totalOrders || '') }}</div>
               <div class="stat-label">订单总数</div>
             </div>
           </div>
@@ -41,7 +41,7 @@
                 </el-icon>
               </div>
               <div class="stat-info">
-                <div class="stat-value">¥{{ stats.totalRevenue }}</div>
+                <div class="stat-value">{{ isStatsLoading ? '正在加载中...' : (stats.totalRevenue ? `¥${stats.totalRevenue}` : '') }}</div>
                 <div class="stat-label">总销售额</div>
               </div>
             </div>
@@ -58,7 +58,7 @@
               </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ stats.totalProducts }}</div>
+              <div class="stat-value">{{ isStatsLoading ? '正在加载中...' : (stats.totalProducts || '') }}</div>
               <div class="stat-label">商品数量</div>
             </div>
           </div>
@@ -73,7 +73,7 @@
               </el-icon>
             </div>
             <div class="stat-info">
-              <div class="stat-value">{{ stats.totalUsers }}</div>
+              <div class="stat-value">{{ isStatsLoading ? '正在加载中...' : (stats.totalUsers || '') }}</div>
               <div class="stat-label">用户数量</div>
             </div>
           </div>
@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue';
+import {ref, onMounted, onUnmounted} from 'vue';
 import {useRouter} from 'vue-router';
 import {ElMessage} from 'element-plus';
 import {Refresh, Document, Money, Box, User} from '@element-plus/icons-vue';
@@ -132,12 +132,16 @@ import axios from 'axios';
 
 const router = useRouter();
 const isLoading = ref(false);
+// 统计数据加载状态（3s超时触发）
+const isStatsLoading = ref(false);
+let loadingTimer: number | null = null;
 
+// 初始值设为空，默认不显示0
 const stats = ref({
-  totalOrders: 0,
-  totalRevenue: '0.00',
-  totalProducts: 0,
-  totalUsers: 0
+  totalOrders: '',
+  totalRevenue: '',
+  totalProducts: '',
+  totalUsers: ''
 });
 
 const recentOrders = ref<any[]>([]);
@@ -182,13 +186,21 @@ const fetchStats = async () => {
     const salesResponse = await axios.get('http://freedom.localhost:8000/api/v1/business/statistics/total-sales/');
 
     stats.value = {
-      totalOrders: orderItemsResponse.data.count || 0,
-      totalRevenue: salesResponse.data.total_sales.toFixed(2),
-      totalProducts: productsResponse.data.count || 0,
-      totalUsers: customersResponse.data.count || 0
+      totalOrders: orderItemsResponse.data.count || '',
+      totalRevenue: salesResponse.data.total_sales?.toFixed(2) || '',
+      totalProducts: productsResponse.data.count || '',
+      totalUsers: customersResponse.data.count || ''
     };
   } catch (error) {
     console.error('获取统计数据失败:', error);
+    ElMessage.error('获取统计数据失败');
+  } finally {
+    // 清除定时器，关闭加载中状态
+    if (loadingTimer) {
+      clearTimeout(loadingTimer);
+      loadingTimer = null;
+    }
+    isStatsLoading.value = false;
   }
 };
 
@@ -217,6 +229,11 @@ const goToOrders = () => {
 onMounted(() => {
   fetchStats();
   fetchRecentOrders();
+});
+
+// 组件销毁时清除定时器
+onUnmounted(() => {
+  if (loadingTimer) clearTimeout(loadingTimer);
 });
 </script>
 
