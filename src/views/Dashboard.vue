@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard">
     <div class="header">
+      <!-- 空占位元素，保持 flex 布局对齐，刷新按钮维持右侧位置 -->
+      <div></div>
       <el-button type="primary" @click="handleRefresh">
         <el-icon>
           <Refresh/>
@@ -90,6 +92,7 @@
               <el-button link type="primary" @click="goToOrders">查看全部</el-button>
             </div>
           </template>
+          <!-- 添加空数据提示：暂无订单数据 -->
           <el-table :data="recentOrders" v-loading="isLoading" stripe border empty-text="暂无订单数据">
             <el-table-column prop="order_no" label="订单号" width="250" align="center"/>
             <el-table-column prop="total_amount" label="商品总价" width="120" align="center">
