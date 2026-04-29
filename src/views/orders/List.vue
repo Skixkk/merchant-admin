@@ -1,7 +1,8 @@
 <template>
   <div class="order-list">
     <div class="header">
-      <h2>订单管理</h2>
+      <!-- 新增空占位div，保持刷新按钮居右 -->
+      <div></div>
       <el-button type="primary" @click="handleRefresh">
         <el-icon>
           <Refresh/>
@@ -11,7 +12,8 @@
     </div>
 
     <el-card>
-      <el-table :data="orders" v-loading="isLoading" stripe>
+      <!-- 添加空数据提示：暂无数据 -->
+      <el-table :data="orders" v-loading="isLoading" stripe empty-text="暂无数据">
         <el-table-column prop="id" label="订单ID" width="100"/>
         <el-table-column prop="order_no" label="订单号" width="180"/>
         <el-table-column prop="total_amount" label="总金额" width="120">
