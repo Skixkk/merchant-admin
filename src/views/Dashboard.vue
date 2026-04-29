@@ -91,7 +91,8 @@
               <el-button link type="primary" @click="goToOrders">查看全部</el-button>
             </div>
           </template>
-          <el-table :data="recentOrders" v-loading="isLoading" stripe border>
+          <!-- 添加空数据提示：暂无订单数据 -->
+          <el-table :data="recentOrders" v-loading="isLoading" stripe border empty-text="暂无订单数据">
             <el-table-column prop="order_no" label="订单号" width="250" align="center"/>
             <el-table-column prop="total_amount" label="商品总价" width="120" align="center">
               <template #default="{ row }">¥{{ row.total_amount }}</template>
