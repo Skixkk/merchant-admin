@@ -44,6 +44,13 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/categories/List.vue'),
                 meta: {title: '分类管理'},
             },
+            // 新增分类创建路由
+            {
+                path: 'categories/create',
+                name: 'CategoryCreate',
+                component: () => import('@/views/categories/create.vue'),
+                meta: {title: '创建分类'},
+            },
         ],
     },
 ];
