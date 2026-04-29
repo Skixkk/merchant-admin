@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'dashboard',
                 name: 'Dashboard',
                 component: () => import('@/views/Dashboard.vue'),
-                meta: {title: '仪表盘'},
+                meta: {title: '数据总览'},
             },
             {
                 path: 'products',
