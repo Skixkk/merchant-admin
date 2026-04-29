@@ -1,7 +1,8 @@
 <template>
   <div class="category-list">
     <div class="header">
-      <h2>分类管理</h2>
+      <!-- 新增空占位div，保持flex布局，按钮居右不变 -->
+      <div></div>
       <el-button type="primary" @click="handleCreate">
         <el-icon>
           <Plus/>
@@ -11,7 +12,8 @@
     </div>
 
     <el-card>
-      <el-table :data="categories" v-loading="isLoading" stripe>
+      <!-- 添加空数据提示：暂无数据 -->
+      <el-table :data="categories" v-loading="isLoading" stripe empty-text="暂无数据">
         <el-table-column prop="id" label="ID" width="80"/>
         <el-table-column prop="name" label="分类名称"/>
         <el-table-column prop="sort" label="排序" width="100"/>
