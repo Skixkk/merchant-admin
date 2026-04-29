@@ -3,7 +3,7 @@
     <aside class="sidebar">
       <div class="logo">Merchant</div>
       <nav class="nav">
-        <router-link to="/dashboard" class="nav-item">仪表盘</router-link>
+        <router-link to="/dashboard" class="nav-item">数据总览</router-link>
         <router-link to="/categories" class="nav-item">分类管理</router-link>
         <router-link to="/products" class="nav-item">商品管理</router-link>
         <router-link to="/orders" class="nav-item">订单管理</router-link>
