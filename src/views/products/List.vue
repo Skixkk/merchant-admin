@@ -1,7 +1,8 @@
 <template>
   <div class="product-list">
     <div class="header">
-      <h2>商品管理</h2>
+      <!-- 新增占位div，保持按钮居右 -->
+      <div></div>
       <el-button type="primary" @click="router.push('/products/create')">
         <el-icon>
           <Plus/>
@@ -11,7 +12,8 @@
     </div>
 
     <el-card>
-      <el-table :data="products" v-loading="isLoading" stripe>
+      <!-- 添加空数据提示：暂无数据 -->
+      <el-table :data="products" v-loading="isLoading" stripe empty-text="暂无数据">
         <el-table-column prop="id" label="ID" width="80"/>
         <el-table-column prop="name" label="商品名称"/>
         <el-table-column label="分类" width="120">
