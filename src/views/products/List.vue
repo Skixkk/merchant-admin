@@ -37,8 +37,10 @@
         </el-table-column>
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="{ row: _row }">
-            <el-button link type="primary" size="small">编辑</el-button>
-            <el-button link type="danger" size="small">删除</el-button>
+            <!-- 绑定编辑跳转事件 -->
+            <el-button link type="primary" size="small" @click="handleEdit(_row)">编辑</el-button>
+            <!-- 绑定删除事件 -->
+            <el-button link type="danger" size="small" @click="handleDelete(_row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,6 +54,9 @@ import {ref, onMounted} from 'vue';
 import axios from 'axios';
 import type {Product} from '@/api';
 import {Plus} from '@element-plus/icons-vue';
+// 导入弹窗工具 + Token认证
+import {ElMessage, ElMessageBox} from 'element-plus';
+import {getToken} from '@/utils/auth';
 
 const router = useRouter();
 const products = ref<Product[]>([]);
@@ -61,13 +66,49 @@ const isLoading = ref(false);
 const fetchProducts = async () => {
   isLoading.value = true;
   try {
-    const response = await axios.get('http://freedom.localhost:8000/api/v1/common/products/');
-    console.log('直接 axios 请求返回:', response.data);
+    const response = await axios.get('http://freedom.localhost:8000/api/v1/common/products/', {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
     products.value = response.data.results || [];
   } catch (error) {
     console.error('请求失败:', error);
   } finally {
     isLoading.value = false;
+  }
+};
+
+// 编辑商品 - 跳转到编辑页面
+const handleEdit = (row: Product) => {
+  router.push(`/products/edit/${row.id}`);
+};
+
+// 删除商品 - 带确认框 + 接口请求
+const handleDelete = async (row: Product) => {
+  try {
+    await ElMessageBox.confirm(
+        '确定要删除该商品吗？删除后将无法恢复！',
+        '删除确认',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+    );
+    // 发送删除请求
+    await axios.delete(`http://freedom.localhost:8000/api/v1/common/products/${row.id}/`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    });
+    ElMessage.success('删除成功！');
+    // 刷新列表
+    fetchProducts();
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('删除失败！');
+    }
   }
 };
 

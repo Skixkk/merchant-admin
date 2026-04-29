@@ -1,140 +1,127 @@
 <template>
-  <Layout>
-    <div class="product-form">
-      <h1>{{ isEdit ? '编辑商品' : '创建商品' }}</h1>
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="100px"
-               style="max-width: 800px; margin-top: 20px">
-        <el-form-item label="商品分类" prop="category_id">
-          <el-select v-model="form.category_id" placeholder="请选择分类" style="width: 100%">
-            <!-- 假设已通过orval生成分类列表API，这里暂用静态数据占位 -->
-            <el-option label="示例分类" :value="1"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="商品名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入商品名称" maxlength="64" show-word-limit/>
-        </el-form-item>
-        <el-form-item label="主图" prop="image">
-          <el-input v-model="form.image" placeholder="请输入主图URL"/>
-        </el-form-item>
-        <el-form-item label="售价" prop="price">
-          <el-input-number v-model="form.price" :precision="2" :step="0.1" :min="0" style="width: 100%"/>
-        </el-form-item>
-        <el-form-item label="原价" prop="original_price">
-          <el-input-number v-model="form.original_price" :precision="2" :step="0.1" :min="0" style="width: 100%"/>
-        </el-form-item>
-        <el-form-item label="库存" prop="stock">
-          <el-input-number v-model="form.stock" :min="0" style="width: 100%"/>
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="form.sort" :min="-32768" :max="32767" style="width: 100%"/>
-        </el-form-item>
-        <el-form-item label="是否上架" prop="is_on_sale">
-          <el-switch v-model="form.is_on_sale"/>
-        </el-form-item>
-        <el-form-item label="商品描述" prop="description">
-          <el-input v-model="form.description" type="textarea" :rows="4" placeholder="请输入商品描述"/>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleSubmit">提交</el-button>
-          <el-button @click="handleReset">重置</el-button>
-          <el-button @click="$router.back()">返回</el-button>
-        </el-form-item>
-      </el-form>
+  <div class="product-list">
+    <div class="header">
+      <!-- 占位div保持按钮居右 -->
+      <div></div>
+      <el-button type="primary" @click="router.push('/products/create')">
+        <el-icon><Plus/></el-icon>
+        创建商品
+      </el-button>
     </div>
-  </Layout>
+
+    <el-card>
+      <el-table :data="products" v-loading="isLoading" stripe empty-text="暂无数据">
+        <el-table-column prop="id" label="ID" width="80"/>
+        <el-table-column prop="name" label="商品名称"/>
+        <el-table-column label="分类" width="120">
+          <template #default="{ row: _row }">
+            {{ _row.category?.name }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="price" label="价格" width="100">
+          <template #default="{ row: _row }">
+            ¥{{ _row.price }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="stock" label="库存" width="80"/>
+        <el-table-column prop="sales" label="销量" width="80"/>
+        <el-table-column label="状态" width="100">
+          <template #default="{ row: _row }">
+            <el-tag :type="_row.is_on_sale ? 'success' : 'info'">
+              {{ _row.is_on_sale ? '上架' : '下架' }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="200" fixed="right">
+          <template #default="{ row: _row }">
+            <!-- 编辑跳转 -->
+            <el-button link type="primary" size="small" @click="handleEdit(_row)">编辑</el-button>
+            <!-- 删除功能 -->
+            <el-button link type="danger" size="small" @click="handleDelete(_row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {ref, reactive, onMounted} from 'vue'
-import {useRoute, useRouter} from 'vue-router'
-import Layout from '@/components/Layout.vue'
-import {ElMessage} from 'element-plus'
-import type {FormInstance, FormRules} from 'element-plus'
-// 基于OpenAPI规范，假设orval生成的商品API hooks
-import {useCommonProductsCreateMutation, useCommonProductsUpdateMutation} from '@/api/index.schemas'
+import {useRouter} from 'vue-router';
+import {ref, onMounted} from 'vue';
+import axios from 'axios';
+import type {Product} from '@/api';
+import {Plus} from '@element-plus/icons-vue';
+// 导入必需依赖：弹窗 + Token认证
+import { ElMessage, ElMessageBox } from 'element-plus';
+import { getToken } from '@/utils/auth';
 
-const route = useRoute()
-const router = useRouter()
-const formRef = ref<FormInstance>()
-const isEdit = ref(false)
+const router = useRouter();
+const products = ref<Product[]>([]);
+const isLoading = ref(false);
 
-interface ProductForm {
-  category_id: number | null
-  name: string
-  image: string
-  images?: any
-  price: string
-  original_price: string
-  stock: number
-  description: string
-  is_on_sale: boolean
-  sort: number
-}
-
-const form = reactive<ProductForm>({
-  category_id: null,
-  name: '',
-  image: '',
-  images: null,
-  price: '0.00',
-  original_price: '0.00',
-  stock: 0,
-  description: '',
-  is_on_sale: true,
-  sort: 0
-})
-
-const rules: FormRules<ProductForm> = {
-  category_id: [{required: true, message: '请选择商品分类', trigger: 'change'}],
-  name: [{required: true, message: '请输入商品名称', trigger: 'blur'}],
-  image: [{required: true, message: '请输入主图URL', trigger: 'blur'}],
-  price: [{required: true, message: '请输入售价', trigger: 'blur'}],
-  original_price: [{required: true, message: '请输入原价', trigger: 'blur'}],
-  stock: [{required: true, message: '请输入库存', trigger: 'blur'}]
-}
-
-// 创建/更新商品API
-const createMutation = useCommonProductsCreateMutation()
-const updateMutation = useCommonProductsUpdateMutation()
-
-const handleSubmit = async () => {
-  if (!formRef.value) return
-  await formRef.value.validate(async (valid) => {
-    if (valid) {
-      try {
-        if (isEdit.value) {
-          // 编辑逻辑，需根据实际API调整参数
-          // await updateMutation.mutateAsync({ id: route.params.id, data: form })
-          ElMessage.success('更新成功')
-        } else {
-          await createMutation.mutateAsync({data: form})
-          ElMessage.success('创建成功')
-        }
-        router.push('/products')
-      } catch (error) {
-        ElMessage.error(isEdit.value ? '更新失败' : '创建失败')
+// 获取商品列表（修复401：添加请求头Token）
+const fetchProducts = async () => {
+  isLoading.value = true;
+  try {
+    const response = await axios.get('http://freedom.localhost:8000/api/v1/common/products/', {
+      // 核心修复：携带登录Token
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
       }
-    }
-  })
-}
+    });
+    products.value = response.data.results || [];
+  } catch (error) {
+    console.error('请求失败:', error);
+    ElMessage.error('获取商品列表失败，请登录后重试');
+  } finally {
+    isLoading.value = false;
+  }
+};
 
-const handleReset = () => {
-  formRef.value?.resetFields()
-}
+// 编辑商品：跳转到表单页
+const handleEdit = (row: Product) => {
+  router.push(`/products/edit/${row.id}`);
+};
+
+// 删除商品（带Token + 确认框）
+const handleDelete = async (row: Product) => {
+  try {
+    await ElMessageBox.confirm('确定删除该商品？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    });
+
+    // 删除请求携带Token
+    await axios.delete(`http://freedom.localhost:8000/api/v1/common/products/${row.id}/`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    });
+
+    ElMessage.success('删除成功');
+    fetchProducts(); // 刷新列表
+  } catch (error) {
+    if (error !== 'cancel') {
+      ElMessage.error('删除失败');
+    }
+  }
+};
 
 onMounted(() => {
-  // 如果是编辑模式，根据路由参数获取商品详情并填充表单
-  if (route.params.id) {
-    isEdit.value = true
-    // 调用获取商品详情API并填充form
-    // const { data } = await useCommonProductsRetrieveQuery({ id: route.params.id })
-    // Object.assign(form, data)
-  }
-})
+  fetchProducts();
+});
 </script>
 
 <style scoped>
-.product-form {
+.product-list {
   padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 </style>

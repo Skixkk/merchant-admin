@@ -1,34 +1,20 @@
 <template>
-  <div class="login-container">
-    <div class="login-box">
-      <h2 class="login-title">Merchant Admin</h2>
-      <el-form :model="loginForm" label-width="0" class="login-form">
-        <el-form-item>
-          <el-input
-              v-model="loginForm.username"
-              placeholder="请输入用户名"
-              prefix-icon="User"
-              size="large"
-          />
+  <div class="login-page">
+    <div class="login-card">
+      <h3>商家后台登录</h3>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="70px">
+        <el-form-item label="账号" prop="phone">
+          <el-input v-model="form.phone" placeholder="请输入手机号"/>
         </el-form-item>
-        <el-form-item>
-          <el-input
-              v-model="loginForm.password"
-              type="password"
-              placeholder="请输入密码"
-              prefix-icon="Lock"
-              size="large"
-              show-password
-              @keyup.enter="handleLogin"
-          />
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="form.password" type="password" placeholder="请输入密码"/>
         </el-form-item>
         <el-form-item>
           <el-button
               type="primary"
-              size="large"
-              class="login-button"
-              :loading="loading"
               @click="handleLogin"
+              :loading="loading"
+              style="width: 100%"
           >
             登录
           </el-button>
@@ -39,37 +25,40 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive} from 'vue'
+import {ref} from 'vue'
 import {useRouter} from 'vue-router'
-import {ElMessage} from 'element-plus'
-import {setToken} from '@/utils/auth'
+import {useUserStore} from '@/stores/user'
+import {ElMessage, ElForm} from 'element-plus'
 
 const router = useRouter()
-const loading = ref(false)
+const userStore = useUserStore()
+const formRef = ref<InstanceType<typeof ElForm>>()
 
-const loginForm = reactive({
-  username: '',
+// 登录表单：修改为 phone 匹配后端 API
+const form = ref({
+  phone: '',
   password: ''
 })
 
-const handleLogin = async () => {
-  if (!loginForm.username || !loginForm.password) {
-    ElMessage.warning('请输入用户名和密码')
-    return
-  }
+// 校验规则
+const rules = ref({
+  phone: [{required: true, message: '请输入手机号', trigger: 'blur'}],
+  password: [{required: true, message: '请输入密码', trigger: 'blur'}]
+})
 
+const loading = ref(false)
+
+// 登录提交
+const handleLogin = async () => {
+  await formRef.value?.validate()
   loading.value = true
   try {
-    // TODO: 替换为真实的登录 API 调用
-    // const res = await axios.post('/auth/login', loginForm)
-    // setToken(res.data.token)
-
-    // 临时模拟登录成功
-    setToken('mock_token_' + Date.now())
+    await userStore.login(form.value)
     ElMessage.success('登录成功')
     router.push('/dashboard')
-  } catch (error) {
-    ElMessage.error('登录失败，请检查用户名和密码')
+  } catch (err: any) {
+    // 显示后端返回的错误信息
+    ElMessage.error(err.response?.data?.msg || '账号或密码错误')
   } finally {
     loading.value = false
   }
@@ -77,35 +66,24 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.login-page {
   height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
 }
 
-.login-box {
-  width: 400px;
-  padding: 40px;
-  background-color: #fff;
+.login-card {
+  width: 420px;
+  padding: 30px;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
-.login-title {
+.login-card h3 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 24px;
-  font-weight: 500;
-}
-
-.login-form {
-  margin-top: 20px;
-}
-
-.login-button {
-  width: 100%;
+  margin-bottom: 25px;
 }
 </style>
