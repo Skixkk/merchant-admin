@@ -1,127 +1,162 @@
+<!-- src/views/products/Form.vue -->
 <template>
-  <div class="product-list">
-    <div class="header">
-      <!-- 占位div保持按钮居右 -->
-      <div></div>
-      <el-button type="primary" @click="router.push('/products/create')">
-        <el-icon><Plus/></el-icon>
-        创建商品
-      </el-button>
-    </div>
-
+  <div class="product-form">
     <el-card>
-      <el-table :data="products" v-loading="isLoading" stripe empty-text="暂无数据">
-        <el-table-column prop="id" label="ID" width="80"/>
-        <el-table-column prop="name" label="商品名称"/>
-        <el-table-column label="分类" width="120">
-          <template #default="{ row: _row }">
-            {{ _row.category?.name }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="price" label="价格" width="100">
-          <template #default="{ row: _row }">
-            ¥{{ _row.price }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="stock" label="库存" width="80"/>
-        <el-table-column prop="sales" label="销量" width="80"/>
-        <el-table-column label="状态" width="100">
-          <template #default="{ row: _row }">
-            <el-tag :type="_row.is_on_sale ? 'success' : 'info'">
-              {{ _row.is_on_sale ? '上架' : '下架' }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="200" fixed="right">
-          <template #default="{ row: _row }">
-            <!-- 编辑跳转 -->
-            <el-button link type="primary" size="small" @click="handleEdit(_row)">编辑</el-button>
-            <!-- 删除功能 -->
-            <el-button link type="danger" size="small" @click="handleDelete(_row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <template #header>
+        <div class="card-header">
+          <span>{{ isEdit ? '编辑商品' : '创建商品' }}</span>
+        </div>
+      </template>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="商品分类" prop="category_id">
+          <el-select v-model="form.category_id" placeholder="请选择分类" style="width: 100%">
+            <el-option
+                v-for="cat in categories"
+                :key="cat.id"
+                :label="cat.name"
+                :value="cat.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="商品名称" prop="name">
+          <el-input v-model="form.name" placeholder="请输入商品名称"/>
+        </el-form-item>
+        <el-form-item label="主图URL" prop="image">
+          <el-input v-model="form.image" placeholder="请输入图片URL"/>
+        </el-form-item>
+        <el-form-item label="售价" prop="price">
+          <el-input-number v-model="form.price" :min="0" :precision="2" style="width: 100%"/>
+        </el-form-item>
+        <el-form-item label="原价" prop="original_price">
+          <el-input-number v-model="form.original_price" :min="0" :precision="2" style="width: 100%"/>
+        </el-form-item>
+        <el-form-item label="库存" prop="stock">
+          <el-input-number v-model="form.stock" :min="0" style="width: 100%"/>
+        </el-form-item>
+        <el-form-item label="商品描述" prop="description">
+          <el-input
+              v-model="form.description"
+              type="textarea"
+              :rows="4"
+              placeholder="请输入商品描述"
+          />
+        </el-form-item>
+        <el-form-item label="上架状态" prop="is_on_sale">
+          <el-switch v-model="form.is_on_sale"/>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input-number v-model="form.sort" :min="0" style="width: 100%"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit" :loading="loading">
+            提交
+          </el-button>
+          <el-button @click="router.back()">取消</el-button>
+        </el-form-item>
+      </el-form>
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useRouter} from 'vue-router';
-import {ref, onMounted} from 'vue';
-import axios from 'axios';
-import type {Product} from '@/api';
-import {Plus} from '@element-plus/icons-vue';
-// 导入必需依赖：弹窗 + Token认证
-import { ElMessage, ElMessageBox } from 'element-plus';
-import { getToken } from '@/utils/auth';
+import {ref, onMounted} from 'vue'
+import {useRouter, useRoute} from 'vue-router'
+import {ElMessage, ElForm} from 'element-plus'
+import request from '@/utils/request'
 
-const router = useRouter();
-const products = ref<Product[]>([]);
-const isLoading = ref(false);
+const router = useRouter()
+const route = useRoute()
+const formRef = ref<InstanceType<typeof ElForm>>()
 
-// 获取商品列表（修复401：添加请求头Token）
-const fetchProducts = async () => {
-  isLoading.value = true;
+const isEdit = ref(false)
+const loading = ref(false)
+const categories = ref<any[]>([])
+
+// 表单初始值
+const form = ref({
+  category_id: null as number | null,
+  name: '',
+  image: '',
+  images: [],
+  price: 0,
+  original_price: 0,
+  stock: 0,
+  description: '',
+  is_on_sale: true,
+  sort: 0
+})
+
+// 表单验证规则
+const rules = ref({
+  category_id: [{required: true, message: '请选择分类', trigger: 'change'}],
+  name: [{required: true, message: '请输入商品名称', trigger: 'blur'}],
+  image: [
+    {required: true, message: '请输入主图URL', trigger: 'blur'},
+    {type: 'url', message: '请输入合法的URL', trigger: 'blur'}
+  ],
+  price: [{required: true, message: '请输入售价', trigger: 'blur'}]
+})
+
+// 获取分类列表
+const fetchCategories = async () => {
   try {
-    const response = await axios.get('http://freedom.localhost:8000/api/v1/common/products/', {
-      // 核心修复：携带登录Token
-      headers: {
-        'Authorization': `Bearer ${getToken()}`
-      }
-    });
-    products.value = response.data.results || [];
+    const res = await request.get('/common/categories/')
+    categories.value = res.results || res
   } catch (error) {
-    console.error('请求失败:', error);
-    ElMessage.error('获取商品列表失败，请登录后重试');
-  } finally {
-    isLoading.value = false;
+    ElMessage.error('获取分类列表失败')
   }
-};
+}
 
-// 编辑商品：跳转到表单页
-const handleEdit = (row: Product) => {
-  router.push(`/products/edit/${row.id}`);
-};
-
-// 删除商品（带Token + 确认框）
-const handleDelete = async (row: Product) => {
+// 获取商品详情（编辑模式）
+const fetchProduct = async (id: number) => {
   try {
-    await ElMessageBox.confirm('确定删除该商品？', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    });
-
-    // 删除请求携带Token
-    await axios.delete(`http://freedom.localhost:8000/api/v1/common/products/${row.id}/`, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`
-      }
-    });
-
-    ElMessage.success('删除成功');
-    fetchProducts(); // 刷新列表
-  } catch (error) {
-    if (error !== 'cancel') {
-      ElMessage.error('删除失败');
+    const res = await request.get(`/common/products/${id}/`)
+    form.value = {
+      ...res,
+      category_id: res.category?.id
     }
+  } catch (error) {
+    ElMessage.error('获取商品详情失败')
   }
-};
+}
+
+// 提交表单
+const handleSubmit = async () => {
+  await formRef.value?.validate()
+  loading.value = true
+  try {
+    if (isEdit.value) {
+      // 编辑
+      await request.put(`/common/products/${route.params.id}/`, form.value)
+      ElMessage.success('更新成功')
+    } else {
+      // 创建
+      await request.post('/common/products/', form.value)
+      ElMessage.success('创建成功')
+    }
+    router.push('/products')
+  } catch (error: any) {
+    ElMessage.error(error.response?.data?.detail || '操作失败')
+  } finally {
+    loading.value = false
+  }
+}
 
 onMounted(() => {
-  fetchProducts();
-});
+  fetchCategories()
+  if (route.params.id) {
+    isEdit.value = true
+    fetchProduct(Number(route.params.id))
+  }
+})
 </script>
 
 <style scoped>
-.product-list {
+.product-form {
   padding: 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.card-header {
+  font-weight: 500;
 }
 </style>
