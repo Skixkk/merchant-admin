@@ -1,3 +1,4 @@
+<!-- src/components/Layout.vue -->
 <template>
   <div class="layout">
     <aside class="sidebar">
@@ -8,6 +9,8 @@
         <router-link to="/products" class="nav-item">商品管理</router-link>
         <router-link to="/orders" class="nav-item">订单管理</router-link>
       </nav>
+      <!-- 引用独立的退出登录组件 -->
+      <SidebarLogout/>
     </aside>
     <main class="main">
       <header class="header">
@@ -21,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-// 布局组件
+import SidebarLogout from './SidebarLogout.vue'
 </script>
 
 <style scoped>
@@ -35,6 +38,8 @@
   background-color: #304156;
   color: #fff;
   padding: 20px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
@@ -47,6 +52,7 @@
 .nav {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .nav-item {
