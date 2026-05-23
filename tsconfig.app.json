@@ -9,9 +9,8 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     // 关键配置：路径别名
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
