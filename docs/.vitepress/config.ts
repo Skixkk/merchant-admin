@@ -10,14 +10,13 @@ export default defineConfig({
   // 👇 新增这一行，固定写法，必须加
   // 与仓库名完全一致，前后斜杠不可省略
   // '/merchant-admin/' '/merchant-admin/'
-  base: '/merchant-admin/',
+  base: '/docs/',
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Prompt', link: '/prompt' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Guide', link: '/guide' },
     ],
 
     sidebar: [
