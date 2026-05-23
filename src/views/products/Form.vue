@@ -101,7 +101,7 @@ const rules = ref({
 const fetchCategories = async () => {
   try {
     const res = await request.get('/common/categories/')
-    categories.value = res.results || res
+    categories.value = res.data.results || res.data // ✅ 原: res.results || res
   } catch (error) {
     ElMessage.error('获取分类列表失败')
   }
@@ -112,8 +112,8 @@ const fetchProduct = async (id: number) => {
   try {
     const res = await request.get(`/common/products/${id}/`)
     form.value = {
-      ...res,
-      category_id: res.category?.id
+      ...res.data, // ✅ 原: 直接赋值 res
+      category_id: res.data.category?.id // ✅ 原: res.category?.id
     }
   } catch (error) {
     ElMessage.error('获取商品详情失败')

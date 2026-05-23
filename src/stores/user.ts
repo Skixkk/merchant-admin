@@ -29,12 +29,12 @@ export const useUserStore = defineStore('user', () => {
         const res = await request.post<LoginResponse>('/tenants/tenant/auth/login/', loginData)
 
         // 保存 Token 到 Pinia 和 localStorage
-        token.value = res.token
-        localStorage.setItem(TOKEN_KEY, res.token)
+        token.value = res.data.token // ✅ 原: res.token
+        localStorage.setItem(TOKEN_KEY, res.data.token) // ✅ 原: res.token
 
         // 保存用户信息到 Pinia 和 localStorage
-        userInfo.value = res.user
-        localStorage.setItem(USER_INFO_KEY, JSON.stringify(res.user))
+        userInfo.value = res.data.user // ✅ 原: res.user
+        localStorage.setItem(USER_INFO_KEY, JSON.stringify(res.data.user)) // ✅ 原: res.user
 
         return res
     }
