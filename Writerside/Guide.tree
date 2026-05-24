@@ -43,4 +43,7 @@
     </toc-element>
     <toc-element topic="orval-的两种方式.md"/>
     <toc-element topic="orval按目录拆分.md"/>
+    <toc-element topic="js打包优化对SSG和SSR无用.md"/>
+    <toc-element topic="CSR-永远只有-1-个-index-html-壳子.md"/>
+    <toc-element topic="js分割提升访问速度.md"/>
 </instance-profile>
