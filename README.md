@@ -7,3 +7,7 @@
 > 通过 vitepress 实现 的该项目的提供给商家的后台使用的文档管理
 
 - Vue 3 + TypeScript + Vite
+
+## 页面展示
+
+![alt text](images/image.png)
