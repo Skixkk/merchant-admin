@@ -31,3 +31,4 @@ docs/.vitepress/dist/
 
 # 环境
 .env
+.vitepress/
