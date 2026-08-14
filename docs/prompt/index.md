@@ -1,4 +1,72 @@
+---
+prev:
+  text: 'Guide'
+  link: '/guide'
+next: 
+  text: 'github LGTM'
+  link: '/github-lgtm'
+---
+
 # Prompt
+
+## Common
+
+- [技术栈选择](https://youupro.xyz/guide/test2.html)
+
+## Create
+
+### 必要一
+
+```text
+1.现在基于我的代码给出完整代码，只允许修改相关代码，不相干的代码，即使是注释也不能修改。代码中禁用 emoji ，
+必要的图片需求使用 `src\static\images` 中的png图片
+针对回复：给出代码即可，如有必要解释放在代码注释中
+
+2.生成修改后的遵循Angular 提交规范的英文版 Git Commit Comments (English)：
+
+<type>(<scope>): git-emoji <subject>
+<BLANK LINE>
+<body>（详细说明修改原因、逻辑、影响）
+<BLANK LINE>
+<footer>（关联Issue、关闭Bug等，如 "Fixes #123"）
+
+```
+
+### 必要二
+
+```text
+1.现在基于我的代码给出完整代码，只允许修改相关代码，不相干的代码，即使是注释也不能修改。代码中禁用 emoji ，
+必要的图片需求使用 `src\static\images` 中的png图片
+针对回复：给出代码即可，如有必要解释放在代码注释中
+
+2.生成修改后的遵循Angular 提交规范的英文版 Git Commit Comments (English)：
+
+<type>(<scope>): git-emoji <subject>
+<BLANK LINE>
+<body>（详细说明修改原因、逻辑、影响）
+<BLANK LINE>
+<footer>（关联Issue、关闭Bug等，如 "Fixes #123"）
+
+```
+
+### 生成 Markdown 格式 PR 评审评论
+
+> GitHub PR review comment
+
+```Text
+以代码的形式返回，Markdown 格式 PR 评审评论，符合 Pull request comment 规范
+
+PR Title:
+
+PR Description：
+
+```
+
+### leave a commet
+
+- [Github 常见缩写黑话](./../github-lgtm/index.md)
+
+## Debug
 
 ```text
 这是个 Django DRF PostgreSQL Redis celery 前后端分离saas多租户外卖小程序项目的后端部分
@@ -11,6 +79,10 @@
 
 ```text
 以注释的形式逐行解释代码
+```
+
+```text
+完全复用 Customer 头像的删除逻辑实现对logo的图片的删除
 ```
 
 ```text
@@ -29,20 +101,6 @@
 ```text
 新增需求：
 实现在微信小程序中点击胶囊按钮上的三个点，在弹出的对话框中的【分享给好友】【分享到朋友圈】
-```
-
-```text
-1.现在基于我的代码给出完整代码，只允许修改相关代码，不相干的代码，即使是注释也不能修改。
-针对回复：给出代码即可，如有必要解释放在代码注释中
-
-2.生成修改后的遵循Angular 提交规范的英文版 Git Commit Comments (English)：
-
-<type>(<scope>): <subject>
-<BLANK LINE>
-<body>（详细说明修改原因、逻辑、影响）
-<BLANK LINE>
-<footer>（关联Issue、关闭Bug等，如 "Fixes #123"）
-
 ```
 
 ```text
