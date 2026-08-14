@@ -39,4 +39,4 @@ npm run <script>
 ## 页面展示
 
 ![alt text](images/image.png)
-![test of avg at vitepress](images/claude.svg)
+![test of avg at vitepress](https://youupro.xyz/ly/chips/claude.svg)

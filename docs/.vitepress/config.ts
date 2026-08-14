@@ -13,8 +13,8 @@ export default defineConfig({
 
   themeConfig: {
     logo: {
-      dark: '/dark-logo.png',
-      light: '/light-logo.png',
+      dark: 'https://youupro.xyz/ly/dark-logo.png',
+      light: 'https://youupro.xyz/ly/light-logo.png',
     },
 
     lastUpdated: {

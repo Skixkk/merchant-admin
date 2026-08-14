@@ -7,7 +7,7 @@ hero:
   text: "The future has arrived."
   tagline: Small and medium-sized food delivery SaaS platform
   image:
-    src: /tech-stack.svg
+    src: https://youupro.xyz/ly/tech-stack.svg
     alt: Developed by Skixkk, an open-source organization of Runsme.com. 
 
   actions:
