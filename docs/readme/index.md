@@ -1,4 +1,11 @@
-# Caneat Saas
+---
+prev: false
+
+next: 
+  text: 'Guide'
+  link: '/guide'
+---
+# Caneat Saas <Badge type="tip" text="^0.2.0" />
 
 > 外卖商家商品管理系统后台
 
@@ -23,7 +30,7 @@ npm run <script>
 - 前三个是基于 vite 开发的 后台管理系统的 开发 构建 预览 运行命令
 - 后三个是基于 vitepress 编写的文档使用的 开发 构建 预览 运行命令
 
-## 技术栈
+## 技术栈 <Badge type="info" text="default" />
 
 > 通过 vitepress 实现 的该项目的提供给商家的后台使用的文档管理
 
@@ -32,3 +39,4 @@ npm run <script>
 ## 页面展示
 
 ![alt text](images/image.png)
+![test of avg at vitepress](images/claude.svg)

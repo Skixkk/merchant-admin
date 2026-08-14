@@ -1,8 +1,17 @@
+---
+prev:
+  text: 'Prompt'
+  link: '/prompt'
+next: 
+  text: 'API Reference'
+  link: '/api-reference'
+---
+
 <!--
  * @Author: Skixkk skixkk7@gmail.com
  * @Date: 2026-08-14 18:43:35
  * @LastEditors: Skixkk skixkk7@gmail.com
- * @LastEditTime: 2026-08-14 18:43:41
+ * @LastEditTime: 2026-08-14 22:12:02
  * @FilePath: \merchant-admin\docs\github-lgtm\index.md
  * @Description: github LGTM and so on
 -->
