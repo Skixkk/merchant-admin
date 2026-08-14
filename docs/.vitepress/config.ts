@@ -7,9 +7,8 @@ export default defineConfig({
   title: "merchant-admin",
   description: "saas admin & guide",
   
-  // 👇 新增这一行，固定写法，必须加
+  // 👇 新增这一行，默认构建在主站的 `/` ；下面设置为 VitePress 打包资源路径 `/mrechant-admin` 下
   // 与仓库名完全一致，前后斜杠不可省略
-  // '/merchant-admin/' '/merchant-admin/'
   base: '/merchant-admin/',
 
   themeConfig: {
@@ -26,13 +25,14 @@ export default defineConfig({
           { text: 'README', link: '/redame' },
           { text: 'Guide', link: '/guide' },
           { text: 'Prompt', link: '/prompt' },
+          { text: 'github LGTM', link: '/github-lgtm' },
           { text: 'API Reference', link: '/api-reference' }
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/Skixkk' }
+      { icon: 'github', link: 'https://github.com/Skixkk/merchant-admin' },
     ]
   }
 })

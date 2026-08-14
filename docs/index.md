@@ -13,9 +13,6 @@ hero:
     - theme: alt
       text: Prompt
       link: /prompt
-    - theme: brand
-      text: API Reference
-      link: /api-reference
 
 features:
   - title: Guide

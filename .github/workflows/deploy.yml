@@ -6,7 +6,7 @@ on:
   # Runs on pushes targeting the `main` branch. Change this to `master` if you're
   # using the `master` branch as the default branch.
   push:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -49,6 +49,7 @@ jobs:
         run: npm run docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
+        # 部署下面的 资源 到虚拟服务器 CI/CD
         with:
           path: docs/.vitepress/dist
 
